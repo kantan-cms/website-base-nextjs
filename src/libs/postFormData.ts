@@ -1,3 +1,4 @@
+"use client"
 import axios from 'axios';
 
 const CMS_BASE_URL = process.env.NEXT_PUBLIC_CMS_BASE_URL
