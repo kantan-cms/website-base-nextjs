@@ -1,43 +1,83 @@
 #!/bin/bash
 
-# Kantan CMS Build Script
-# This script automates the process of fetching data from Kantan CMS,
-# converting it to the appropriate format, and deploying the site.
+# Kantan CMS Build Script (Simplified)
+# This script:
+# 1. Fetches data from Kantan CMS and converts to markdown (single step)
+# 2. Builds the Next.js site
+
+set -e  # Exit on error
 
 echo "====================================================="
 echo "🚀 Starting Kantan CMS build process"
 echo "====================================================="
-
-# Step 1: Fetch data from Kantan CMS API
-echo "📥 Step 1/3: Fetching data from Kantan CMS..."
-bash ./scripts/get-from-cms.sh
-if [ $? -ne 0 ]; then
-    echo "❌ Error: Failed to fetch data from CMS"
-    exit 1
-fi
-echo "✅ Data fetching completed successfully"
 echo
 
-# Step 2: Convert JSON data to markdown files
-echo "🔄 Step 2/3: Converting content to markdown..."
-bash ./scripts/run-convert.sh
-if [ $? -ne 0 ]; then
-    echo "❌ Error: Failed to convert content"
+# Check if .env exists
+if [ ! -f ".env" ]; then
+    echo "❌ Error: .env file not found"
+    echo "Please create a .env file with the following variables:"
+    echo "  KANTAN_PROJECT_ID=your-project-id"
+    echo "  KANTAN_API_KEY=your-api-key"
+    echo "  KANTAN_BASE_URL=https://api.kantan-cms.com (optional)"
+    echo "  REQUIRED_COLLECTIONS=collection-id-1,collection-id-2 (optional)"
     exit 1
 fi
-echo "✅ Content conversion completed successfully"
+
+# Load environment variables
+source .env
+
+# Validate required environment variables
+if [ -z "$KANTAN_PROJECT_ID" ] && [ -z "$PROJECT_ID" ]; then
+    echo "❌ Error: KANTAN_PROJECT_ID (or PROJECT_ID) not set in .env"
+    exit 1
+fi
+
+if [ -z "$KANTAN_API_KEY" ] && [ -z "$CMS_API_KEY" ]; then
+    echo "❌ Error: KANTAN_API_KEY (or CMS_API_KEY) not set in .env"
+    exit 1
+fi
+
+echo "✅ Environment variables loaded"
 echo
 
-# Step 3: Build the site with npm
-echo "🏗️ Step 3/3: Building the site with npm..."
+# Step 1: Fetch and convert content
+echo "📥 Step 1/2: Fetching and converting content from Kantan CMS..."
+echo
+
+npx tsx scripts/fetch-and-convert.ts
+
+if [ $? -ne 0 ]; then
+    echo "❌ Error: Failed to fetch and convert content"
+    exit 1
+fi
+
+echo
+echo "✅ Content fetching and conversion completed successfully"
+echo
+
+# Step 2: Build the site
+echo "🏗️ Step 2/2: Building the site with npm..."
+echo
+
 npm run build
+
 if [ $? -ne 0 ]; then
     echo "❌ Error: Failed to build the site"
     exit 1
 fi
+
+echo
 echo "✅ Site build completed successfully"
 echo
 
 echo "====================================================="
 echo "✨ Build process completed successfully!"
+echo "====================================================="
+echo
+echo "📋 Summary:"
+echo "  - Content fetched from Kantan CMS"
+echo "  - Markdown files generated in contents/ directory"
+echo "  - Next.js site built successfully"
+echo
+echo "🚀 Your site is ready to deploy!"
 echo "====================================================="
