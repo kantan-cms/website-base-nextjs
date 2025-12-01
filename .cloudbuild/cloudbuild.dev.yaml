@@ -1,0 +1,21 @@
+substitutions:
+  _APP_NAME: kantan-cms
+  _ENV: 'dev'
+  _DIR_NAME: 'website-base-nextjs'
+  _AVOID: '^\.cloudbuild/|^\.git/|^README\.md$|^\.gitignore$|^docker/|^src/'
+
+steps:
+  - name: 'gcr.io/cloud-builders/gsutil'
+    args:
+      - '-m'
+      - 'rsync'
+      - '-r'
+      - '-d'
+      - '-c'
+      - '-x'
+      - '${_AVOID}'
+      - '.'
+      - 'gs://kantan-cms-app-${_ENV}/${_DIR_NAME}/'
+
+options:
+  logging: CLOUD_LOGGING_ONLY
