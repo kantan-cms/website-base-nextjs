@@ -2,7 +2,7 @@ substitutions:
   _APP_NAME: kantan-cms
   _ENV: 'dev'
   _DIR_NAME: 'website-base-nextjs'
-  _AVOID: '^\.cloudbuild/|^\.git/|^README\.md$|^\.gitignore$|^docker/|^src/'
+  _AVOID: '^\.cloudbuild/|^\.git/|^README\.md$|^\.gitignore$|^docker/'
 
 steps:
   - name: 'gcr.io/cloud-builders/gsutil'
