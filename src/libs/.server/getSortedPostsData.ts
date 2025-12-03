@@ -1,9 +1,9 @@
 import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
- 
+
 const postsDirectory = path.join(process.cwd(), 'contents');
- 
+
 export function getSortedCollectionsData(collection: string, sortKey = "date") {
   // Get file names under /posts
   const collectionDirectory = path.join(postsDirectory, collection);
@@ -11,18 +11,24 @@ export function getSortedCollectionsData(collection: string, sortKey = "date") {
   const allPostsData = fileNames.map((fileName: string): Record<string, any> => {
     // Remove ".md" from file name to get id
     const id = fileName.replace(/\.md$/, '');
- 
+
     // Read markdown file as string
     const fullPath = path.join(collectionDirectory, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
- 
+
     // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents);
- 
+
+    // Convert Date objects to strings
+    const data = { ...matterResult.data };
+    if (data.date instanceof Date) {
+      data.date = data.date.toISOString().split('T')[0];
+    }
+
     // Combine the data with the id
     return {
       id,
-      ...matterResult.data,
+      ...data,
     };
   });
   // Sort posts by date
@@ -33,4 +39,10 @@ export function getSortedCollectionsData(collection: string, sortKey = "date") {
       return -1;
     }
   });
+}
+
+export function getAllCollectionSlugs(collection: string) {
+  const collectionDirectory = path.join(postsDirectory, collection);
+  const fileNames = fs.readdirSync(collectionDirectory);
+  return fileNames.map((fileName: string) => fileName.replace(/\.md$/, ''));
 }

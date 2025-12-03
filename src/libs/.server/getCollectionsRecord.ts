@@ -20,10 +20,16 @@ export function getCollectionsRecord(collection: string, slugField: string) {
   // Use gray-matter to parse the post metadata section
   const matterResult = matter(fileContents);
 
+  // Convert Date objects to strings
+  const data = { ...matterResult.data };
+  if (data.date instanceof Date) {
+    data.date = data.date.toISOString().split('T')[0];
+  }
+
   // Return the data with the id and content
   return {
     slugField,
     content: matterResult.content,
-    ...matterResult.data,
+    ...data,
   };
 }
