@@ -51,7 +51,6 @@ jobs:
           echo "NEXT_PUBLIC_CMS_BASE_URL=https://api.kantan-cms.com" >> .env
           echo "KANTAN_REQUIRED_COLLECTION_IDS=$collectionId" >> .env
           echo "NEXT_PUBLIC_POST_COLLECTION_ID=$postCollectionId" >> .env
-          # KANTAN_REQUIRED_COLLECTION_IDS and NEXT_PUBLIC_POST_COLLECTION_ID will be set by worker
 
       - name: Run worker to generate website code
         run: |
