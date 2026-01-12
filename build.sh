@@ -44,7 +44,7 @@ echo
 echo "📥 Step 1/2: Fetching and converting content from Kantan CMS..."
 echo
 
-npx tsx scripts/fetch-and-convert.ts
+bash scripts/get-from-cms.sh && bash scripts/run-convert.sh
 
 if [ $? -ne 0 ]; then
     echo "❌ Error: Failed to fetch and convert content"

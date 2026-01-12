@@ -44,6 +44,34 @@ function readJsonFile<T>(filePath: string): T[] {
 }
 
 /**
+ * Formats a single frontmatter field value
+ */
+function formatFrontmatterField(key: string, value: unknown): string {
+  // Handle arrays
+  if (Array.isArray(value)) {
+    if (value.length === 0) {
+      return `${key}: []`;
+    }
+    const itemsStr = value.map(item => `"${item}"`).join(', ');
+    return `${key}: [${itemsStr}]`;
+  }
+  
+  // Handle booleans
+  if (typeof value === 'boolean') {
+    return `${key}: ${value.toString().toLowerCase()}`;
+  }
+  
+  // Handle numbers
+  if (typeof value === 'number') {
+    return `${key}: ${value}`;
+  }
+  
+  // Handle strings - escape quotes
+  const escapedValue = String(value).replace(/"/g, '\\"');
+  return `${key}: "${escapedValue}"`;
+}
+
+/**
  * Generates frontmatter for a markdown file based on configuration
  */
 function generateFrontmatter(item: ContentItem, config: FrontmatterFieldConfig[]): string {
@@ -53,14 +81,9 @@ function generateFrontmatter(item: ContentItem, config: FrontmatterFieldConfig[]
     const value = item[field.sourceField];
     
     if (value !== undefined && value !== null && value !== '') {
-      let formattedValue = field.formatter ? field.formatter(value) : value;
+      const formattedValue = field.formatter ? field.formatter(value) : value;
       
-      // Add quotes for string values
-      if (typeof formattedValue === 'string') {
-        formattedValue = `"${formattedValue}"`;
-      }
-      
-      frontmatterLines.push(`${field.targetField}: ${formattedValue}`);
+      frontmatterLines.push(formatFrontmatterField(field.targetField, formattedValue));
     } else if (field.required) {
       frontmatterLines.push(`${field.targetField}: ""`);
     }

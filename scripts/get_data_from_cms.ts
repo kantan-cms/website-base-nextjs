@@ -147,7 +147,7 @@ async function getCollections(): Promise<Collection[]> {
     // Filter collections if required
     if (config.requiredCollections.length > 0) {
       return allCollections.filter(collection => 
-        config.requiredCollections.includes(collection.name)
+        config.requiredCollections.includes(collection.id)
       );
     }
     
@@ -214,13 +214,13 @@ function saveRecordsToFile(collection: Collection, records: Record[]): void {
     
     // Write to file
     fs.writeFileSync(
-      path.join(config.storagePath, `${collection.name}.json`), 
+      path.join(config.storagePath, `${collection.id}.json`), 
       JSON.stringify(records, null, 2)
     );
     
-    console.log(`✓ Saved ${records.length} records for collection "${collection.name}"`);
+    console.log(`✓ Saved ${records.length} records for collection "${collection.id}"`);
   } catch (error) {
-    console.log(`Error saving records for collection ${collection.name}:`, error);
+    console.log(`Error saving records for collection ${collection.id}:`, error);
   }
 }
 
