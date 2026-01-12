@@ -6,7 +6,7 @@ import axios from 'axios';
 console.log('Environment variables:');
 console.log('PROJECT_ID:', process.env.PROJECT_ID);
 console.log('CMS_API_KEY:', process.env.CMS_API_KEY ? '(set)' : '(not set)');
-console.log('KANTAN_REQUIRED_COLLECTIONS:', process.env.KANTAN_REQUIRED_COLLECTIONS);
+console.log('KANTAN_REQUIRED_COLLECTION_IDS:', process.env.KANTAN_REQUIRED_COLLECTION_IDS);
 console.log('KANTAN_STORAGE_PATH:', process.env.KANTAN_STORAGE_PATH);
 
 // Configuration
@@ -22,8 +22,8 @@ const config: KantanConfig = {
   projectId: process.env.PROJECT_ID || '',
   apiKey: process.env.CMS_API_KEY || '',
   baseUrl: `${process.env.CMS_BASE_URL}/v1/api`,
-  requiredCollections: process.env.KANTAN_REQUIRED_COLLECTIONS ? 
-    process.env.KANTAN_REQUIRED_COLLECTIONS.split(',') : 
+  requiredCollections: process.env.KANTAN_REQUIRED_COLLECTION_IDS ? 
+    process.env.KANTAN_REQUIRED_COLLECTION_IDS.split(',') : 
     [],
   storagePath: process.env.KANTAN_STORAGE_PATH || './tmp/'
 };

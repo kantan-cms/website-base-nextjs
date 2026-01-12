@@ -31,7 +31,7 @@ export interface ExtractorConfig {
 // Content converter configuration
 export interface ContentConverterConfig {
   // Collection information
-  collectionName: string;  // Name of the collection (e.g., 'Blog', 'Project')
+  collectionId: string;  // Name of the collection (e.g., 'Blog', 'Project')
   
   // File paths
   sourceFile: string;      // Path to the source JSON file

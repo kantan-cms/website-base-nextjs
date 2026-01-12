@@ -11,19 +11,19 @@ fi
 
 # Set default values if environment variables are not set
 STORAGE_PATH=${KANTAN_STORAGE_PATH:-"./tmp/"}
-REQUIRED_COLLECTIONS=${KANTAN_REQUIRED_COLLECTIONS:-""}
+KANTAN_REQUIRED_COLLECTION_IDS=${KANTAN_REQUIRED_COLLECTION_IDS:-""}
 
 # Remove trailing slash if present
 STORAGE_PATH=${STORAGE_PATH%/}
 
 # Get the first collection from the list (usually Blog)
-FIRST_COLLECTION=$(echo $REQUIRED_COLLECTIONS | cut -d ',' -f 1)
+FIRST_COLLECTION=$(echo $KANTAN_REQUIRED_COLLECTION_IDS | cut -d ',' -f 1)
 
 echo "====================================================="
 echo "🔄 Starting content conversion process"
 echo "====================================================="
 echo "Using storage path: $STORAGE_PATH"
-echo "Required collections: $REQUIRED_COLLECTIONS"
+echo "Required collections: $KANTAN_REQUIRED_COLLECTION_IDS"
 
 # Check if the storage directory exists and contains the required data
 if [ ! -d "$STORAGE_PATH" ]; then

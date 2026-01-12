@@ -19,7 +19,7 @@ if [ ! -f ".env" ]; then
     echo "  KANTAN_PROJECT_ID=your-project-id"
     echo "  KANTAN_API_KEY=your-api-key"
     echo "  KANTAN_BASE_URL=https://api.kantan-cms.com (optional)"
-    echo "  REQUIRED_COLLECTIONS=collection-id-1,collection-id-2 (optional)"
+    echo "  KANTAN_REQUIRED_COLLECTION_IDS=collection-id-1,collection-id-2 (optional)"
     exit 1
 fi
 

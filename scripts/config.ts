@@ -6,8 +6,8 @@ import type {
 
 // Get environment variables with defaults
 const STORAGE_PATH = process.env.KANTAN_STORAGE_PATH || path.resolve('..', 'tmp');
-const REQUIRED_COLLECTIONS = process.env.KANTAN_REQUIRED_COLLECTIONS ? 
-  process.env.KANTAN_REQUIRED_COLLECTIONS.split(',') : ['Blog'];
+const KANTAN_REQUIRED_COLLECTION_IDS = process.env.KANTAN_REQUIRED_COLLECTION_IDS ? 
+  process.env.KANTAN_REQUIRED_COLLECTION_IDS.split(',') : [];
 
 
 /**
@@ -24,8 +24,8 @@ export function formatDateToIso(dateString: string): string {
 export const converterConfigs: ContentConverterConfig[] = [
   // Blog converter configuration
   {
-    collectionName: REQUIRED_COLLECTIONS[0],
-    sourceFile: path.join(STORAGE_PATH, `${REQUIRED_COLLECTIONS[0]}.json`),
+    collectionId: KANTAN_REQUIRED_COLLECTION_IDS[0],
+    sourceFile: path.join(STORAGE_PATH, `${KANTAN_REQUIRED_COLLECTION_IDS[0]}.json`),
     targetDir: path.resolve('docs', 'docs'),
     slugField: 'fname',
     contentField: 'content',

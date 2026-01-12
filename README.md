@@ -41,7 +41,7 @@ CMS_API_KEY=<your_api_key>
 CMS_BASE_URL=https://api.kantan-cms.com
 
 # Optional - Content Management
-KANTAN_REQUIRED_COLLECTIONS=<Collections>  # comma-separated collection names
+KANTAN_REQUIRED_COLLECTION_IDS=<Collections>  # comma-separated collection ids
 KANTAN_STORAGE_PATH=../tmp                 # temporary storage for fetched data
 
 # Optional - Frontend Configuration
@@ -147,7 +147,7 @@ website-base-nextjs/
 // Example from scripts/config.ts
 export const converterConfigs: ContentConverterConfig[] = [
   {
-    collectionName: 'Blog',
+    collectionId: 'UUID-of-Blog-Collection',
     sourceFile: path.join(STORAGE_PATH, 'Blog.json'),
     targetDir: path.resolve('docs', 'docs'),
     slugField: 'fname',
