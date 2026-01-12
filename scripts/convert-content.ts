@@ -146,7 +146,7 @@ async function convertContent(config: ContentConverterConfig): Promise<void> {
     const sourcePath = path.resolve(config.sourceFile);
     const items = readJsonFile<ContentItem>(sourcePath);
     
-    console.log(`Found ${items.length} items to convert for ${config.collectionName}`);
+    console.log(`Found ${items.length} items to convert for ${config.collectionId}`);
     
     // Keep track of processed slugs to handle duplicates
     const processedSlugs = new Set<string>();
@@ -156,9 +156,9 @@ async function convertContent(config: ContentConverterConfig): Promise<void> {
       processContentItem(item, config.targetDir, config, processedSlugs);
     }
     
-    console.log(`Content conversion completed successfully for ${config.collectionName}`);
+    console.log(`Content conversion completed successfully for ${config.collectionId}`);
   } catch (error) {
-    console.error(`Error converting content for ${config.collectionName}:`, error);
+    console.error(`Error converting content for ${config.collectionId}:`, error);
   }
 }
 
