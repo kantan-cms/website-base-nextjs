@@ -30,7 +30,7 @@ echo "Fetching data from Kantan CMS API..."
 echo "This may take a moment depending on the amount of data..."
 
 # Run the data fetching script
-vite-node --project scripts/tsconfig.json scripts/get_data_from_cms.ts
+npx tsx --project scripts/tsconfig.json scripts/get_data_from_cms.ts
 
 # Check if the script executed successfully
 if [ $? -eq 0 ]; then
